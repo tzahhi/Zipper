@@ -1,6 +1,7 @@
 ﻿using Ionic.Zip;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -33,7 +34,7 @@ namespace Zipper
                 // Console.WriteLine(p);
 
                 int numOfPasswordDigits = (int)Math.Floor(Math.Log10(password) + 1);
-                for (int i = 0; i <= MAX_DIGITS - numOfPasswordDigits ; i++)
+                for (int i = 0; i <= MAX_DIGITS - numOfPasswordDigits; i++)
                 {
                     string passwordStr = password.ToString().PadLeft(i + numOfPasswordDigits, '0');
                     Console.WriteLine(passwordStr);
@@ -45,10 +46,15 @@ namespace Zipper
                         {
                             Console.WriteLine("SUCCESS " + passwordStr);
                             done = true;
+
+                            StringBuilder sb = new StringBuilder();
+                            sb.Append("SUCCESS " + passwordStr);
+
+                            File.WriteAllText("SUCCESS.txt", sb.ToString());
                             break;
                         }
                         //Console.WriteLine("SUCCESS " + passwordStr);
-                        
+
                     }
                     catch (Exception e)
                     {
@@ -111,14 +117,14 @@ namespace Zipper
                     try
                     {
 
-                        if(ZipFile.CheckZipPassword("New folder\\clues.zip", currentPasswordAsString))
+                        if (ZipFile.CheckZipPassword("New folder\\clues.zip", currentPasswordAsString))
                         {
                             Console.WriteLine("SUCCESS " + currentPasswordAsString);
                         }
 
                         //var zip = ZipFile.Read("New folder\\clues.zip");
                         //zip.Entries.First().ExtractWithPassword(currentPasswordAsString);
-                        
+
                     }
                     catch (Exception e)
                     {
